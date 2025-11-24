@@ -27,7 +27,7 @@
             color: white;
             font-family: "Segoe UI", Arial, sans-serif;
         }
-        .window-10-main-section{
+        .window-10-main-section {
             position: absolute;
             top: 40%;
             left: 50%;
@@ -36,16 +36,22 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            transition: opacity 0.8s ease;
+            transition: opacity 0.6s ease;
         }
         .windows-10-bottom-text {
             position: absolute;
             bottom: max(15px, 10%);
             left: 50%;
-            transform: translate(-50%, 0);
+            transform: translateX(-50%);
             white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            font-size: 14px;
+            opacity: 0.9;
+            transition: opacity 0.6s ease;
+        }
+        .restart-text {
+            font-size: 42px;
+            font-weight: 300;
+            opacity: 0;
             transition: opacity 0.8s ease;
         }
         .dot:nth-child(1) { --angle: 0deg; animation: winFade var(--duration) infinite 0s; }
@@ -63,13 +69,8 @@
             100% { opacity: 0; transform: rotate(var(--angle)) translate(var(--radius)) translate(-50%,-50%) scale(0.6); }
         }
         @media (max-width: 420px) {
-            :root {
-                --size: 90px;
-                --dot-size: 10px;
-                --radius: 28px;
-                --duration: 1.4s;
-                --gap: 0.11s;
-            }
+            :root { --size: 90px; --dot-size: 10px; --radius: 28px; --duration: 1.4s; --gap: 0.11s; }
+            .restart-text { font-size: 32px; }
         }
         *, *::after, *::before { cursor: none !important; }
         #pixelCursor {
@@ -87,83 +88,68 @@
             transition: opacity 0.15s ease;
             box-shadow: 0 0 4px 1px red;
         }
-        /* Pantalla de reinicio */
-        #restartingScreen {
-            position: absolute;
-            inset: 0;
-            background: var(--bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 42px;
-            font-weight: 300;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.8s ease;
+        /* Loader clásico de Windows */
+        :root { --loader-size: 40px; }
+        @media screen and (max-width:1024px) { :root { --loader-size: 30px; } }
+        .loader {
+            position: relative;
+            width: var(--loader-size);
+            height: var(--loader-size);
+            border-radius: 50%;
+            animation: rotate 4s linear infinite;
+            margin-bottom: calc(var(--loader-size)/2);
         }
-        @media (max-width: 600px) { #restartingScreen { font-size: 32px; } }
+        .loader span::after {
+            position: absolute;
+            width: calc(var(--loader-size)/8);
+            height: calc(var(--loader-size)/8);
+            border-radius: 50%;
+            background-color: #fff;
+            content: "";
+            display: block;
+            transform-origin: calc(var(--loader-size)/2) calc(var(--loader-size)/2);
+            animation-duration: 4s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+        }
+        @keyframes rotate { to { transform: rotate(360deg); } }
+        .pip-0::after { transform: rotate(0deg); animation: rotate-0 4s infinite; animation-delay: .9s; }
+        .pip-1::after { transform: rotate(20deg); animation: rotate-1 4s infinite; animation-delay: 775ms; }
+        .pip-2::after { transform: rotate(40deg); animation: rotate-2 4s infinite; animation-delay: 650ms; }
+        .pip-3::after { transform: rotate(60deg); animation: rotate-3 4s infinite; animation-delay: 525ms; }
+        .pip-4::after { transform: rotate(80deg); animation: rotate-4 4s infinite; animation-delay: .4s; }
+        .pip-5::after { transform: rotate(100deg); animation: rotate-5 4s infinite; animation-delay: 275ms; }
+        @keyframes rotate-0 { 0%,20%{transform:rotate(0)} 40%,60%{transform:rotate(180deg)} 80%,100%{transform:rotate(360deg)} }
+        @keyframes rotate-1 { 0%,20%{transform:rotate(20deg)} 40%,60%{transform:rotate(200deg)} 80%,100%{transform:rotate(380deg)} }
+        @keyframes rotate-2 { 0%,20%{transform:rotate(40deg)} 40%,60%{transform:rotate(220deg)} 80%,100%{transform:rotate(400deg)} }
+        @keyframes rotate-3 { 0%,20%{transform:rotate(60deg)} 40%,60%{transform:rotate(240deg)} 80%,100%{transform:rotate(420deg)} }
+        @keyframes rotate-4 { 0%,20%{transform:rotate(80deg)} 40%,60%{transform:rotate(260deg)} 80%,100%{transform:rotate(440deg)} }
+        @keyframes rotate-5 { 0%,20%{transform:rotate(100deg)} 40%,60%{transform:rotate(280deg)} 80%,100%{transform:rotate(460deg)} }
     </style>
 </head>
 <body>
     <div id="pixelCursor"></div>
 
-    <!-- Pantalla normal de actualización -->
     <div class="full-screen windows-10">
-        <div class="window-10-main-section" id="updateSection">
-            <style>
-                :root { --loader-size: 40px; }
-                @media screen and (max-width:1024px) { :root { --loader-size: 30px; } }
-                .loader {
-                    position: relative;
-                    width: var(--loader-size);
-                    height: var(--loader-size);
-                    border-radius: 50%;
-                    animation: rotate 4s linear infinite;
-                    margin-bottom: calc(var(--loader-size)/2);
-                }
-                .loader span::after {
-                    position: absolute;
-                    width: calc(var(--loader-size)/8);
-                    height: calc(var(--loader-size)/8);
-                    border-radius: 50%;
-                    background-color: #fff;
-                    content: "";
-                    display: block;
-                    transform-origin: calc(var(--loader-size)/2) calc(var(--loader-size)/2);
-                    animation-duration: 4s;
-                    animation-iteration-count: infinite;
-                    animation-timing-function: ease-in-out;
-                }
-                @keyframes rotate { to { transform: rotate(360deg); } }
-                .pip-0::after { transform: rotate(0); animation: rotate-0 4s infinite; animation-delay: .9s; }
-                .pip-1::after { transform: rotate(20deg); animation: rotate-1 4s infinite; animation-delay: 775ms; }
-                .pip-2::after { transform: rotate(40deg); animation: rotate-2 4s infinite; animation-delay: 650ms; }
-                .pip-3::after { transform: rotate(60deg); animation: rotate-3 4s infinite; animation-delay: 525ms; }
-                .pip-4::after { transform: rotate(80deg); animation: rotate-4 4s infinite; animation-delay: .4s; }
-                .pip-5::after { transform: rotate(100deg); animation: rotate-5 4s infinite; animation-delay: 275ms; }
-                @keyframes rotate-0 { 0%,20%{transform:rotate(0)} 40%,60%{transform:rotate(180deg)} 100%,80%{transform:rotate(360deg)} }
-                @keyframes rotate-1 { 0%,20%{transform:rotate(20deg)} 40%,60%{transform:rotate(200deg)} 100%,80%{transform:rotate(380deg)} }
-                @keyframes rotate-2 { 0%,20%{transform:rotate(40deg)} 40%,60%{transform:rotate(220deg)} 100%,80%{transform:rotate(400deg)} }
-                @keyframes rotate-3 { 0%,20%{transform:rotate(60deg)} 40%,60%{transform:rotate(240deg)} 100%,80%{transform:rotate(420deg)} }
-                @keyframes rotate-4 { 0%,20%{transform:rotate(80deg)} 40%,60%{transform:rotate(260deg)} 100%,80%{transform:rotate(440deg)} }
-                @keyframes rotate-5 { 0%,20%{transform:rotate(100deg)}40%,60%{transform:rotate(280deg)} 100%,80%{transform:rotate(460deg)} }
-            </style>
-            <div class="loader">
-                <span class="pip-0"></span><span class="pip-1"></span><span class="pip-2"></span>
-                <span class="pip-3"></span><span class="pip-4"></span><span class="pip-5"></span>
+        <div class="window-10-main-section" id="mainSection">
+            <div class="loader" id="loader">
+                <span class="pip-0"></span>
+                <span class="pip-1"></span>
+                <span class="pip-2"></span>
+                <span class="pip-3"></span>
+                <span class="pip-4"></span>
+                <span class="pip-5"></span>
             </div>
-            <span class="window-10-main-text">
+            <div id="updateText">
                 <span>Working on updates </span><span id="update-percentage">0</span>% complete.<br>
                 <span>Don't turn off your PC. This will take a while.</span>
-            </span>
+            </div>
+            <div class="restart-text" id="restartText">Restarting</div>
         </div>
         <span class="windows-10-bottom-text" id="bottomText">
             Your PC may restart several times
         </span>
     </div>
-
-    <!-- Pantalla de "Reiniciando" -->
-    <div id="restartingScreen">Restarting</div>
 
     <script>
         const pixel = document.getElementById('pixelCursor');
@@ -192,47 +178,53 @@
             }
         });
 
-        // === LÓGICA DEL PORCENTAJE Y REINICIO ===
+        // === LÓGICA DEL PORCENTAJE + REINICIO INFINITO ===
         const percentageEl = document.getElementById('update-percentage');
-        const updateSection = document.getElementById('updateSection');
+        const updateText = document.getElementById('updateText');
+        const restartText = document.getElementById('restartText');
         const bottomText = document.getElementById('bottomText');
-        const restartingScreen = document.getElementById('restartingScreen');
-
-        let currentPercent = 0;
+        const mainSection = document.getElementById('mainSection');
 
         function startUpdateCycle() {
-            currentPercent = 0;
-            percentageEl.textContent = '0';
-
-            // Mostrar pantalla de actualización
-            updateSection.style.opacity = '1';
-            bottomText.style.opacity = '1';
-            restartingScreen.style.opacity = '0';
+            let percent = 0;
+            percentageEl.textContent = percent;
 
             const interval = setInterval(() => {
-                currentPercent += 1;
-                if (currentPercent <= 75) {
-                    percentageEl.textContent = currentPercent;
-                }
-                if (currentPercent >= 75) {
+                percent += 1;
+                if (percent > 75) {
                     clearInterval(interval);
-                    // === FASE DE REINICIO ===
-                    updateSection.style.opacity = '0';
+
+                    // Ocultar texto de actualización
+                    updateText.style.opacity = '0';
                     bottomText.style.opacity = '0';
+
+                    // Mostrar "Restarting" después de un pequeño delay
                     setTimeout(() => {
-                        restartingScreen.style.opacity = '1';
+                        updateText.style.display = 'none';
+                        bottomText.style.display = 'none';
+                        restartText.style.opacity = '1';
+                        restartText.style.display = 'block';
                     }, 800);
 
+                    // Después de 8 segundos → reiniciar ciclo
                     setTimeout(() => {
-                        // Volver a empezar el ciclo
-                        restartingScreen.style.opacity = '0';
-                        setTimeout(startUpdateCycle, 1000);
-                    }, 20000); // 20 segundos de "Reiniciando"
+                        restartText.style.opacity = '0';
+                        setTimeout(() => {
+                            restartText.style.display = 'none';
+                            updateText.style.display = 'block';
+                            bottomText.style.display = 'block';
+                            updateText.style.opacity = '1';
+                            bottomText.style.opacity = '1';
+                            startUpdateCycle(); // ¡Vuelve a empezar!
+                        }, 800);
+                    }, 8000);
+                } else {
+                    percentageEl.textContent = percent;
                 }
-            }, 180); // velocidad de aumento (ajusta si quieres más lento/rápido)
+            }, 180); // Velocidad realista (75% ≈ 13.5 segundos)
         }
 
-        // Iniciar el primer ciclo al cargar la página
+        // Iniciar el primer ciclo al cargar
         startUpdateCycle();
     </script>
 </body>
