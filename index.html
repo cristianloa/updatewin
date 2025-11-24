@@ -4,17 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Getting Windows ready – Don’t turn off your computer</title>
-
     <style>
         :root {
-            --size:       120px;   /* tamaño del círculo */
-            --dot-size:   12px;    /* tamaño de cada punto */
-            --radius:     36px;    /* distancia del centro */
-            --duration:   1.6s;    /* velocidad del ciclo */
-            --gap:        0.12s;   /* separación entre puntos */
-            --bg:         #0078d7;       /* azul oficial de Windows 10/11 */
+            --size: 120px;
+            --dot-size: 12px;
+            --radius: 36px;
+            --duration: 1.6s;
+            --gap: 0.12s;
+            --bg: #0078d7;
         }
-
         html, body {
             height: 100%;
             margin: 0;
@@ -27,48 +25,43 @@
             overflow: hidden;
             text-align: center;
             color: white;
+            font-family: "Segoe UI", Arial, sans-serif;
         }
         .window-10-main-section{
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -40%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.windows-10-bottom-text {
-    position: absolute;
-    bottom: max(15px, 10%);
-    left: 50%;
-    transform: translate(-50%, 0);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-        
-
-        /* Posición y delay de cada uno de los 8 puntos */
-        .dot:nth-child(1)  { --angle:   0deg; animation: winFade var(--duration) infinite 0s;      }
-        .dot:nth-child(2)  { --angle:  45deg; animation: winFade var(--duration) infinite calc(var(--gap)*1); }
-        .dot:nth-child(3)  { --angle:  90deg; animation: winFade var(--duration) infinite calc(var(--gap)*2); }
-        .dot:nth-child(4)  { --angle: 135deg; animation: winFade var(--duration) infinite calc(var(--gap)*3); }
-        .dot:nth-child(5)  { --angle: 180deg; animation: winFade var(--duration) infinite calc(var(--gap)*4); }
-        .dot:nth-child(6)  { --angle: 225deg; animation: winFade var(--duration) infinite calc(var(--gap)*5); }
-        .dot:nth-child(7)  { --angle: 270deg; animation: winFade var(--duration) infinite calc(var(--gap)*6); }
-        .dot:nth-child(8)  { --angle: 315deg; animation: winFade var(--duration) infinite calc(var(--gap)*7); }
-
-        @keyframes winFade {
-            0%   { opacity: 0;   transform: rotate(var(--angle)) translate(var(--radius)) translate(-50%,-50%) scale(0.6); }
-            25%  { opacity: 1;   transform: rotate(var(--angle)) translate(var(--radius)) translate(-50%,-50%) scale(1);   }
-            75%  { opacity: 0.9; transform: rotate(var(--angle)) translate(var(--radius)) translate(-50%,-50%) scale(0.95); }
-            100% { opacity: 0;   transform: rotate(var(--angle)) translate(var(--radius)) translate(-50%,-50%) scale(0.6); }
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -40%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: opacity 0.8s ease;
         }
-
-        /* Responsive */
+        .windows-10-bottom-text {
+            position: absolute;
+            bottom: max(15px, 10%);
+            left: 50%;
+            transform: translate(-50%, 0);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: opacity 0.8s ease;
+        }
+        .dot:nth-child(1) { --angle: 0deg; animation: winFade var(--duration) infinite 0s; }
+        .dot:nth-child(2) { --angle: 45deg; animation: winFade var(--duration) infinite calc(var(--gap)*1); }
+        .dot:nth-child(3) { --angle: 90deg; animation: winFade var(--duration) infinite calc(var(--gap)*2); }
+        .dot:nth-child(4) { --angle: 135deg; animation: winFade var(--duration) infinite calc(var(--gap)*3); }
+        .dot:nth-child(5) { --angle: 180deg; animation: winFade var(--duration) infinite calc(var(--gap)*4); }
+        .dot:nth-child(6) { --angle: 225deg; animation: winFade var(--duration) infinite calc(var(--gap)*5); }
+        .dot:nth-child(7) { --angle: 270deg; animation: winFade var(--duration) infinite calc(var(--gap)*6); }
+        .dot:nth-child(8) { --angle: 315deg; animation: winFade var(--duration) infinite calc(var(--gap)*7); }
+        @keyframes winFade {
+            0% { opacity: 0; transform: rotate(var(--angle)) translate(var(--radius)) translate(-50%,-50%) scale(0.6); }
+            25% { opacity: 1; transform: rotate(var(--angle)) translate(var(--radius)) translate(-50%,-50%) scale(1); }
+            75% { opacity: 0.9; transform: rotate(var(--angle)) translate(var(--radius)) translate(-50%,-50%) scale(0.95); }
+            100% { opacity: 0; transform: rotate(var(--angle)) translate(var(--radius)) translate(-50%,-50%) scale(0.6); }
+        }
         @media (max-width: 420px) {
             :root {
                 --size: 90px;
@@ -78,49 +71,54 @@
                 --gap: 0.11s;
             }
         }
-
-        /* Oculta el cursor nativo */
-*, *::after, *::before {
-    cursor: none !important;
-}
-
-/* El pixel rojo personalizado */
-#pixelCursor {
-    position: fixed;
-    width: 1px;
-    height: 1px;
-    background: red;
-    border-radius: 50%;           /* opcional: hace el pixel perfectamente redondo */
-    pointer-events: none;
-    z-index: 999999;
-    left: -10px;
-    top: -10px;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    transition: opacity 0.15s ease;
-    /* Opcional: brillo para que se vea mejor en fondos claros */
-    box-shadow: 0 0 4px 1px red;
-}
+        *, *::after, *::before { cursor: none !important; }
+        #pixelCursor {
+            position: fixed;
+            width: 1px;
+            height: 1px;
+            background: red;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 999999;
+            left: -10px;
+            top: -10px;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.15s ease;
+            box-shadow: 0 0 4px 1px red;
+        }
+        /* Pantalla de reinicio */
+        #restartingScreen {
+            position: absolute;
+            inset: 0;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            font-weight: 300;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease;
+        }
+        @media (max-width: 600px) { #restartingScreen { font-size: 32px; } }
     </style>
 </head>
 <body>
-
     <div id="pixelCursor"></div>
 
-    <!-- Estilos inline originales que estaban dentro del body (los mantengo tal cual, solo formateados) -->
-    <div class="full-screen windows-10" onclick="_f()">
-        <div class="window-10-main-section">
+    <!-- Pantalla normal de actualización -->
+    <div class="full-screen windows-10">
+        <div class="window-10-main-section" id="updateSection">
             <style>
                 :root { --loader-size: 40px; }
                 @media screen and (max-width:1024px) { :root { --loader-size: 30px; } }
-
                 .loader {
                     position: relative;
                     width: var(--loader-size);
                     height: var(--loader-size);
                     border-radius: 50%;
-                    animation: 4s linear 1s normal none infinite running;
-                    animation-name: rotate;
+                    animation: rotate 4s linear infinite;
                     margin-bottom: calc(var(--loader-size)/2);
                 }
                 .loader span::after {
@@ -136,90 +134,106 @@
                     animation-iteration-count: infinite;
                     animation-timing-function: ease-in-out;
                 }
-                @keyframes rotate { 0%{transform:rotate(0)} 100%{transform:rotate(360deg)} }
-
-                .pip-0::after { transform: rotate(0);     animation-name: rotate-0; animation-delay: .9s; }
-                .pip-1::after { transform: rotate(20deg); animation-name: rotate-1;   animation-delay: 775ms; }
-                .pip-2::after { transform: rotate(40deg); animation-name: rotate-2; animation-delay: 650ms; }
-                .pip-3::after { transform: rotate(60deg); animation-name: rotate-3; animation-delay: 525ms; }
-                .pip-4::after { transform: rotate(80deg); animation-name: rotate-4; animation-delay: .4s; }
-                .pip-5::after { transform: rotate(100deg);animation-name: rotate-5; animation-delay: 275ms; }
-
-                @keyframes rotate-0 { 0%,20%{transform:rotate(0)}     40%,60%{transform:rotate(180deg)} 100%,80%{transform:rotate(360deg)} }
+                @keyframes rotate { to { transform: rotate(360deg); } }
+                .pip-0::after { transform: rotate(0); animation: rotate-0 4s infinite; animation-delay: .9s; }
+                .pip-1::after { transform: rotate(20deg); animation: rotate-1 4s infinite; animation-delay: 775ms; }
+                .pip-2::after { transform: rotate(40deg); animation: rotate-2 4s infinite; animation-delay: 650ms; }
+                .pip-3::after { transform: rotate(60deg); animation: rotate-3 4s infinite; animation-delay: 525ms; }
+                .pip-4::after { transform: rotate(80deg); animation: rotate-4 4s infinite; animation-delay: .4s; }
+                .pip-5::after { transform: rotate(100deg); animation: rotate-5 4s infinite; animation-delay: 275ms; }
+                @keyframes rotate-0 { 0%,20%{transform:rotate(0)} 40%,60%{transform:rotate(180deg)} 100%,80%{transform:rotate(360deg)} }
                 @keyframes rotate-1 { 0%,20%{transform:rotate(20deg)} 40%,60%{transform:rotate(200deg)} 100%,80%{transform:rotate(380deg)} }
                 @keyframes rotate-2 { 0%,20%{transform:rotate(40deg)} 40%,60%{transform:rotate(220deg)} 100%,80%{transform:rotate(400deg)} }
                 @keyframes rotate-3 { 0%,20%{transform:rotate(60deg)} 40%,60%{transform:rotate(240deg)} 100%,80%{transform:rotate(420deg)} }
                 @keyframes rotate-4 { 0%,20%{transform:rotate(80deg)} 40%,60%{transform:rotate(260deg)} 100%,80%{transform:rotate(440deg)} }
                 @keyframes rotate-5 { 0%,20%{transform:rotate(100deg)}40%,60%{transform:rotate(280deg)} 100%,80%{transform:rotate(460deg)} }
             </style>
-
             <div class="loader">
-                <span class="pip-0"></span>
-                <span class="pip-1"></span>
-                <span class="pip-2"></span>
-                <span class="pip-3"></span>
-                <span class="pip-4"></span>
-                <span class="pip-5"></span>
+                <span class="pip-0"></span><span class="pip-1"></span><span class="pip-2"></span>
+                <span class="pip-3"></span><span class="pip-4"></span><span class="pip-5"></span>
             </div>
-
             <span class="window-10-main-text">
-                <span>Working on updates </span><span id="update-percentage">7</span>% complete.<br>
+                <span>Working on updates </span><span id="update-percentage">0</span>% complete.<br>
                 <span>Don't turn off your PC. This will take a while.</span>
             </span>
         </div>
-
-        <span class="windows-10-bottom-text">
+        <span class="windows-10-bottom-text" id="bottomText">
             Your PC may restart several times
         </span>
     </div>
 
+    <!-- Pantalla de "Reiniciando" -->
+    <div id="restartingScreen">Reiniciando</div>
+
+    <script>
+        const pixel = document.getElementById('pixelCursor');
+        document.addEventListener('mousemove', e => {
+            pixel.style.left = e.clientX + 'px';
+            pixel.style.top = e.clientY + 'px';
+            pixel.style.opacity = '1';
+        });
+        document.addEventListener('touchmove', e => {
+            if (e.touches.length > 0) {
+                const touch = e.touches[0];
+                pixel.style.left = touch.clientX + 'px';
+                pixel.style.top = touch.clientY + 'px';
+                pixel.style.opacity = '1';
+            }
+        });
+        document.addEventListener('mouseout', () => pixel.style.opacity = '0');
+        document.addEventListener('mouseenter', () => pixel.style.opacity = '1');
+
+        // Pantalla completa al hacer clic
+        document.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen?.() ||
+                document.documentElement.webkitRequestFullscreen?.() ||
+                document.documentElement.msRequestFullscreen?.();
+            }
+        });
+
+        // === LÓGICA DEL PORCENTAJE Y REINICIO ===
+        const percentageEl = document.getElementById('update-percentage');
+        const updateSection = document.getElementById('updateSection');
+        const bottomText = document.getElementById('bottomText');
+        const restartingScreen = document.getElementById('restartingScreen');
+
+        let currentPercent = 0;
+
+        function startUpdateCycle() {
+            currentPercent = 0;
+            percentageEl.textContent = '0';
+
+            // Mostrar pantalla de actualización
+            updateSection.style.opacity = '1';
+            bottomText.style.opacity = '1';
+            restartingScreen.style.opacity = '0';
+
+            const interval = setInterval(() => {
+                currentPercent += 1;
+                if (currentPercent <= 75) {
+                    percentageEl.textContent = currentPercent;
+                }
+                if (currentPercent >= 75) {
+                    clearInterval(interval);
+                    // === FASE DE REINICIO ===
+                    updateSection.style.opacity = '0';
+                    bottomText.style.opacity = '0';
+                    setTimeout(() => {
+                        restartingScreen.style.opacity = '1';
+                    }, 800);
+
+                    setTimeout(() => {
+                        // Volver a empezar el ciclo
+                        restartingScreen.style.opacity = '0';
+                        setTimeout(startUpdateCycle, 1000);
+                    }, 20000); // 20 segundos de "Reiniciando"
+                }
+            }, 180); // velocidad de aumento (ajusta si quieres más lento/rápido)
+        }
+
+        // Iniciar el primer ciclo al cargar la página
+        startUpdateCycle();
+    </script>
 </body>
-
-    <script>
-const pixel = document.getElementById('pixelCursor');
-
-document.addEventListener('mousemove', e => {
-    pixel.style.left = e.clientX + 'px';
-    pixel.style.top  = e.clientY + 'px';
-    pixel.style.opacity = '1';
-});
-
-// Soporte táctil (móviles y tablets)
-document.addEventListener('touchmove', e => {
-    const touch = e.touches[0];
-    pixel.style.left = touch.clientX + 'px';
-    pixel.style.top  = touch.clientY + 'px';
-    pixel.style.opacity = '1';
-});
-
-// Ocultar cuando el cursor sale de la ventana
-document.addEventListener('mouseout', () => pixel.style.opacity = '0');
-document.addEventListener('mouseenter', () => pixel.style.opacity = '1');
-</script>
-
-    <script>
-// === FUNCIÓN DE PANTALLA COMPLETA AL HACER CLIC ===
-// (funciona en todos los navegadores modernos)
-
-document.addEventListener('click', function toggleFullScreen() {
-    if (!document.fullscreenElement) {
-        // Entrar en pantalla completa
-        document.documentElement.requestFullscreen?.() ||
-        document.documentElement.webkitRequestFullscreen?.() ||
-        document.documentElement.msRequestFullscreen?.();
-    } else {
-        // Salir de pantalla completa
-        document.exitFullscreen?.() ||
-        document.webkitExitFullscreen?.() ||
-        document.msExitFullscreen?.();
-    }
-});
-
-// Opcional: también salir con la tecla ESC (comportamiento nativo, pero lo reforzamos)
-document.addEventListener('fullscreenchange', function() {
-    if (!document.fullscreenElement) {
-        // Aquí podrías añadir algo cuando se sale (ej. mostrar el cursor otra vez, etc.)
-    }
-});
-</script>
 </html>
