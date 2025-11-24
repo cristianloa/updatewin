@@ -78,11 +78,34 @@
                 --gap: 0.11s;
             }
         }
+
+        /* Oculta el cursor nativo */
+*, *::after, *::before {
+    cursor: none !important;
+}
+
+/* El pixel rojo personalizado */
+#pixelCursor {
+    position: fixed;
+    width: 1px;
+    height: 1px;
+    background: red;
+    border-radius: 50%;           /* opcional: hace el pixel perfectamente redondo */
+    pointer-events: none;
+    z-index: 999999;
+    left: -10px;
+    top: -10px;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    /* Opcional: brillo para que se vea mejor en fondos claros */
+    box-shadow: 0 0 4px 1px red;
+}
     </style>
 </head>
 <body>
 
-    
+    <div id="pixelCursor"></div>
 
     <!-- Estilos inline originales que estaban dentro del body (los mantengo tal cual, solo formateados) -->
     <div class="full-screen windows-10" onclick="_f()">
@@ -151,4 +174,26 @@
     </div>
 
 </body>
+
+    <script>
+const pixel = document.getElementById('pixelCursor');
+
+document.addEventListener('mousemove', e => {
+    pixel.style.left = e.clientX + 'px';
+    pixel.style.top  = e.clientY + 'px';
+    pixel.style.opacity = '1';
+});
+
+// Soporte táctil (móviles y tablets)
+document.addEventListener('touchmove', e => {
+    const touch = e.touches[0];
+    pixel.style.left = touch.clientX + 'px';
+    pixel.style.top  = touch.clientY + 'px';
+    pixel.style.opacity = '1';
+});
+
+// Ocultar cuando el cursor sale de la ventana
+document.addEventListener('mouseout', () => pixel.style.opacity = '0');
+document.addEventListener('mouseenter', () => pixel.style.opacity = '1');
+</script>
 </html>
