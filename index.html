@@ -196,4 +196,30 @@ document.addEventListener('touchmove', e => {
 document.addEventListener('mouseout', () => pixel.style.opacity = '0');
 document.addEventListener('mouseenter', () => pixel.style.opacity = '1');
 </script>
+
+    <script>
+// === FUNCIÓN DE PANTALLA COMPLETA AL HACER CLIC ===
+// (funciona en todos los navegadores modernos)
+
+document.addEventListener('click', function toggleFullScreen() {
+    if (!document.fullscreenElement) {
+        // Entrar en pantalla completa
+        document.documentElement.requestFullscreen?.() ||
+        document.documentElement.webkitRequestFullscreen?.() ||
+        document.documentElement.msRequestFullscreen?.();
+    } else {
+        // Salir de pantalla completa
+        document.exitFullscreen?.() ||
+        document.webkitExitFullscreen?.() ||
+        document.msExitFullscreen?.();
+    }
+});
+
+// Opcional: también salir con la tecla ESC (comportamiento nativo, pero lo reforzamos)
+document.addEventListener('fullscreenchange', function() {
+    if (!document.fullscreenElement) {
+        // Aquí podrías añadir algo cuando se sale (ej. mostrar el cursor otra vez, etc.)
+    }
+});
+</script>
 </html>
